@@ -22,10 +22,10 @@ CREATE OR ALTER PROCEDURE GetMaxOrderStatistics
 AS
 BEGIN
     SELECT TOP 1
-        c.name AS Заказчик,
-        COUNT(DISTINCT o.id) AS [Макс.кол-во заказов],
-        SUM(oi.qty) AS [Макс.кол-во продукции],
-        SUM(oi.qty * dbo.GetProductCost(oi.productId)) AS [Макс.сумма заказов]
+        c.name AS Г‡Г ГЄГ Г§Г·ГЁГЄ,
+        COUNT(DISTINCT o.id) AS [ГЊГ ГЄГ±.ГЄГ®Г«-ГўГ® Г§Г ГЄГ Г§Г®Гў],
+        SUM(oi.qty) AS [ГЊГ ГЄГ±.ГЄГ®Г«-ГўГ® ГЇГ°Г®Г¤ГіГЄГ¶ГЁГЁ],
+        SUM(oi.qty * dbo.GetProductCost(oi.productId)) AS [ГЊГ ГЄГ±.Г±ГіГ¬Г¬Г  Г§Г ГЄГ Г§Г®Гў]
     FROM Orders o
     JOIN Clients c ON o.clientId = c.id
     JOIN OrderItems oi ON o.id = oi.orderId
@@ -35,7 +35,6 @@ BEGIN
 END
 GO
 
--- Добавляем колонку total_sum (если нет)
 IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('Orders') AND name = 'total_sum')
 BEGIN
     ALTER TABLE Orders ADD total_sum DECIMAL(12,2) DEFAULT 0;
@@ -68,9 +67,9 @@ GO
 
 SELECT 
     o.id,
-    c.name AS Заказчик,
+    c.name AS Г‡Г ГЄГ Г§Г·ГЁГЄ,
     o.date,
-    o.total_sum AS [Итоговая сумма заказа]
+    o.total_sum AS [Г€ГІГ®ГЈГ®ГўГ Гї Г±ГіГ¬Г¬Г  Г§Г ГЄГ Г§Г ]
 FROM Orders o
 JOIN Clients c ON o.clientId = c.id;
 GO
